@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from './api';
 import ItemList from './components/ItemList';
 import './App.css';
 
@@ -22,7 +22,7 @@ function App() {
   const fetchItems = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/items');
+      const response = await api.get('/api/items');
       setItems(response.data);
       setError('');
     } catch (err) {
@@ -49,7 +49,7 @@ function App() {
     }
 
     try {
-      const response = await axios.post('/api/items', formData);
+      const response = await api.post('/api/items', formData);
       setItems([...items, response.data]);
       setFormData({
         name: '',
@@ -66,7 +66,7 @@ function App() {
 
   const handleDeleteItem = async (id) => {
     try {
-      await axios.delete(`/api/items/${id}`);
+      await api.delete(`/api/items/${id}`);
       setItems(items.filter(item => item._id !== id));
       setError('');
     } catch (err) {
